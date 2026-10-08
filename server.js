@@ -11,7 +11,7 @@ const DEMO_MODE = process.env.DEMO_MODE === "true";
 const sessions = new Map();
 const loginAttempts = new Map();
 const categories = ["Electronics", "Accessories", "Study", "Clothing", "Keys"];
-const locations = ["Library", "Garden Boys Hostel", "Girls Hostel", "Placement Cell", "Sports Complex", "Cafeteria"];
+const locations = ["Library", "Garden", "Boys Hostel", "Girls Hostel", "Placement Cell", "Sports Complex", "Cafeteria"];
 let database;
 function fail(status, message) { const error = new Error(message); error.status = status; throw error; }
 function field(input, key, min = 1, max = 500) { const value = input[key]; if (typeof value !== "string" || value.trim().length < min || value.trim().length > max) fail(400, `Please enter a valid ${key} (${min}–${max} characters).`); return value.trim(); }
@@ -19,8 +19,8 @@ function admin(req, res, data) { const user = currentUser(req, data); if (!user)
 
 const seedItems = [
   ["Blue water bottle", "found", "Accessories", "Library", "A matte blue bottle with a small white sticker near the cap.", "♒", "visual-blue", "Riya S."],
-  ["Black wireless earbuds", "lost", "Electronics", "Garden Boys Hostel", "Black earbuds in a small charging case. Left earbud has a tiny mark.", "◉", "visual-peach", "Ayush K."],
-  ["Calculus notebook", "found", "Study", "Placement Cell", "Purple spiral notebook with handwritten notes and a yellow tab.", "▤", "visual-lilac", "Dev M."],
+  ["Black wireless earbuds", "lost", "Electronics", "Boys Hostel", "Black earbuds in a small charging case. Left earbud has a tiny mark.", "◉", "visual-peach", "Ayush K."],
+  ["Calculus notebook", "found", "Study", "Garden", "Purple spiral notebook with handwritten notes and a yellow tab.", "▤", "visual-lilac", "Dev M."],
   ["Silver keychain", "lost", "Keys", "Cafeteria", "Silver keychain with three keys and a tiny green charm.", "⚿", "visual-yellow", "Meera P."],
   ["Grey hoodie", "found", "Clothing", "Sports Complex", "Oversized grey hoodie, size M, found on the second-floor bench.", "♧", "visual-blue", "Kabir R."],
   ["USB-C adapter", "lost", "Electronics", "Library", "Small white USB-C to HDMI adapter with a grey pouch.", "▣", "visual-peach", "Nisha T."],
@@ -56,8 +56,10 @@ function readData() {
   if (!database) {
     database = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
     for (const item of database.items) {
-      if (item.location === "North Block") item.location = "Placement Cell";
-      if (item.location === "Student Centre") item.location = item.id === 8 && !item.reporterId ? "Girls Hostel" : "Garden Boys Hostel";
+      if (item.location === "North Block") item.location = item.id === 3 && !item.reporterId ? "Garden" : "Placement Cell";
+      if (item.location === "Student Centre") item.location = item.id === 8 && !item.reporterId ? "Girls Hostel" : "Boys Hostel";
+      if (item.location === "Garden Boys Hostel") item.location = "Boys Hostel";
+      if (item.id === 3 && !item.reporterId && item.location === "Placement Cell") item.location = "Garden";
     }
   }
   return database;
