@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="CampusLost helps students reunite with lost belongings." />
+    <title>CampusLost — Find what matters</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="CampusLost home">
+          <span class="brand-mark"><span></span><span></span><span></span></span>
+          <span>Campus<span class="brand-accent">Lost</span></span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a class="nav-link active" href="#browse">Browse items</a>
+          <a class="nav-link" href="#report">Report an item</a>
+          <a class="nav-link" href="#dashboard">My dashboard</a>
+        </nav>
+        <div class="profile-area">
+          <button class="profile-chip" id="profileChip" type="button" aria-expanded="false">
+            <span class="avatar">?</span>
+            <span class="profile-name">Sign in</span>
+            <span class="icon-button" aria-hidden="true">⌄</span>
+          </button>
+          <div class="profile-dropdown hidden" id="profileDropdown">
+            <span class="profile-email" id="profileEmail"></span>
+            <span class="profile-role" id="profileRole"></span>
+            <button class="logout-button" id="logoutButton" type="button">Sign out</button>
+          </div>
+        </div>
+      </header>
+
+      <aside id="demoBanner" class="demo-banner hidden" role="note">Portfolio demo · Use sample information only. Reports and photos may reset when the demo restarts. <a href="#demoAccounts">Demo login details</a></aside>
+      <main id="top">
+        <section class="hero" id="browse">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="pulse-dot"></span> Built for your campus community</div>
+            <h1>Find what matters.<br /><em>Return what’s lost.</em></h1>
+            <p>One trusted place for your campus to report, discover, and reunite with lost belongings.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#report">Report an item <span>→</span></a>
+              <button class="text-button" id="howItWorks">How it works <span class="play-icon">▶</span></button>
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="blob blob-one"></div>
+            <div class="blob blob-two"></div>
+            <div class="doodle doodle-star">✦</div>
+            <div class="doodle doodle-sparkle">✧</div>
+            <div class="art-card art-card-main">
+              <div class="polaroid-icon">⌁</div>
+              <span class="mini-label">FOUND TODAY</span>
+              <strong>Blue water bottle</strong>
+              <span class="art-location">Library · 2h ago</span>
+              <div class="art-avatar-row"><span class="tiny-avatar">RS</span><span>Reported by Riya</span></div>
+            </div>
+            <div class="art-card art-card-note"><span class="note-pin">●</span><strong>Could be yours?</strong><span>Make a claim →</span></div>
+            <div class="art-circle"><span>✓</span></div>
+          </div>
+        </section>
+
+        <section class="stats-strip" aria-label="CampusLost statistics">
+          <div class="stat"><strong id="statRecovered">0</strong><span>Items reunited</span></div>
+          <div class="stat"><strong id="statReports">0</strong><span>Total reports</span></div>
+          <div class="stat"><strong id="statActive">0</strong><span>Active listings</span></div>
+          <div class="stat stat-note"><span class="green-check">✓</span><span>Admin-reviewed claims</span></div>
+        </section>
+
+        <section class="browse-section page-section">
+          <div class="section-heading">
+            <div><span class="section-kicker">EXPLORE THE CAMPUS</span><h2>Recently reported</h2></div>
+            <button class="filter-button" id="filterToggle">Filters <span>≡</span></button>
+          </div>
+          <div class="toolbar">
+            <div class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search by item, brand, or location..." /></div>
+            <div class="segmented" role="tablist" aria-label="Listing type">
+              <button class="segment active" data-type="all">All items <span id="allCount">8</span></button>
+              <button class="segment" data-type="lost">Lost <span id="lostCount">4</span></button>
+              <button class="segment" data-type="found">Found <span id="foundCount">4</span></button>
+            </div>
+          </div>
+          <div class="filter-row hidden" id="filterRow">
+            <select id="categoryFilter"><option value="all">All categories</option><option>Electronics</option><option>Accessories</option><option>Study</option><option>Clothing</option><option>Keys</option></select>
+            <select id="locationFilter"><option value="all">Any location</option><option>Library</option><option>Student Centre</option><option>North Block</option><option>Sports Complex</option><option>Cafeteria</option></select>
+            <button class="clear-button" id="clearFilters">Clear filters</button>
+          </div>
+          <div id="connectionError" class="connection-error hidden" role="alert">Unable to reach the server. Check that npm start is running. <button id="retryConnection" type="button">Retry</button></div>
+          <div class="items-grid" id="itemsGrid"></div>
+          <div class="empty-state hidden" id="emptyState"><div>⌕</div><h3>No matching items</h3><p>Try a different search or clear your filters.</p></div>
+          <button class="load-more" id="loadMore">Load more items <span>↓</span></button>
+        </section>
+
+        <section class="report-section page-section" id="report">
+          <div class="report-copy"><span class="section-kicker">HELP THE COMMUNITY</span><h2>Lost something?<br /><em>Found something?</em></h2><p>A quick report can make someone’s day. Add the details you remember and let the campus community help.</p><div class="report-points"><span>✓</span><span>New reports are reviewed before appearing publicly.</span><span>✓</span><span>Claim details are shared only with the admin.</span></div></div>
+          <form class="report-form" id="reportForm">
+            <div class="form-top"><div><span class="section-kicker">NEW REPORT</span><h3>Tell us what happened</h3></div><span class="step-pill">Step 1 of 1</span></div>
+            <div class="type-choice"><button type="button" class="type-card selected" data-report-type="lost"><span class="choice-icon lost-icon">!</span><span><strong>I lost an item</strong><small>Help me find it</small></span><span class="radio"></span></button><button type="button" class="type-card" data-report-type="found"><span class="choice-icon found-icon">✓</span><span><strong>I found an item</strong><small>Help me return it</small></span><span class="radio"></span></button></div>
+            <div class="form-grid"><label>Item name<input required name="title" minlength="2" maxlength="100" placeholder="e.g. Black backpack" /></label><label>Category<select required name="category"><option value="">Choose one</option><option>Electronics</option><option>Accessories</option><option>Study</option><option>Clothing</option><option>Keys</option></select></label><label>Where?<select required name="location"><option value="">Choose a location</option><option>Library</option><option>Student Centre</option><option>North Block</option><option>Sports Complex</option><option>Cafeteria</option></select></label><label>When? <input required name="date" type="date" /></label></div>
+            <label class="full-label">A few more details<textarea required name="description" minlength="10" maxlength="2000" rows="3" placeholder="Colour, brand, identifying marks..."></textarea></label>
+            <div class="photo-field"><label for="reportPhoto">Item photo <span>(optional)</span></label><input id="reportPhoto" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="photoHelp photoError" /><small id="photoHelp">JPEG, PNG or WebP, up to 2 MB. Avoid faces, IDs and private information.</small><p id="photoError" role="alert" class="photo-error hidden"></p><div id="photoPreviewWrap" class="photo-preview hidden"><img id="photoPreview" alt="Selected item photo preview" /><button id="removePhoto" class="text-button" type="button">Remove photo ×</button></div></div>
+            <button class="button button-primary submit-button" type="submit">Submit report <span>→</span></button>
+          </form>
+        </section>
+
+        <section class="dashboard-section page-section" id="dashboard">
+          <div class="section-heading"><div><span class="section-kicker">YOUR ACTIVITY</span><h2>My dashboard</h2></div><span class="verified-badge" id="memberBadge">Sign in to track your activity</span></div>
+          <div class="dashboard-grid"><div class="dashboard-card"><div><strong id="myReports">0</strong><span>My reports</span></div><a href="#reportHistory">View reports →</a></div><div class="dashboard-card"><div><strong id="myClaims">0</strong><span>Claims sent</span></div><a href="#claimHistory">View claims →</a></div><div class="dashboard-card"><div><strong id="myReturned">0</strong><span>Approved claims</span></div><button class="text-button" id="refreshActivity" type="button">Refresh ↻</button></div></div>
+          <p id="dashboardPrompt">Sign in to see your saved reports and claim decisions. <button id="dashboardSignIn" class="text-button" type="button">Sign in →</button></p>
+          <div id="activityLists" class="activity-lists hidden"><section><h3>My reports</h3><ul id="reportHistory" class="activity-list"></ul></section><section><h3>My claims</h3><ul id="claimHistory" class="activity-list"></ul></section></div>
+      </section>
+        <section class="admin-section page-section hidden" id="adminPanel">
+          <div class="section-heading"><div><span class="section-kicker">ADMIN CONSOLE</span><h2>Moderation queue</h2></div><span class="verified-badge">Admin access</span></div>
+          <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Item</th><th>Type</th><th>Reporter</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminRows"></tbody></table></div>
+          <div class="admin-subheading"><span class="section-kicker">OWNERSHIP REVIEW</span><h3>Claim requests</h3></div>
+          <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Item</th><th>Claimant</th><th>Ownership details</th><th>Status</th><th>Action</th></tr></thead><tbody id="claimRows"></tbody></table></div>
+        </section>
+        <section id="demoAccounts" class="page-section hidden"><h3>Try the demo</h3><p>Student: aarav@campuslost.local / Password123!<br />Admin: admin@campuslost.local / Admin123!</p><p>Use the profile menu to sign out and switch roles. Submit a report as a student, approve it as admin, then try a claim on a sample found item.</p></section>
+        <section id="privacy" class="page-section"><h3>Your privacy</h3><p>Approved listings are public. Your email and claim evidence are not included in public listings. Administrators review ownership details. This local demo does not verify college membership or send emails.</p></section>
+      </main>
+
+      <footer class="footer"><div class="brand"><span class="brand-mark"><span></span><span></span><span></span></span><span>Campus<span class="brand-accent">Lost</span></span></div><span>Made for kinder, more connected campuses.</span><div><a href="#privacy">Privacy</a><a href="#report">Help report an item</a></div></footer>
+    </div>
+
+    <div class="modal-backdrop hidden" id="modalBackdrop"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button aria-label="Close item details" class="modal-close" id="modalClose">×</button><div class="modal-icon">✦</div><h2 id="modalTitle">Make a claim</h2><img id="detailPhoto" class="detail-photo hidden" alt="Item photo" /><p id="modalDescription">Tell us why you think this item belongs to you. The admin will verify your claim privately.</p><form id="claimForm"><label>Your connection to this item<textarea required minlength="10" maxlength="2000" rows="4" placeholder="Add identifying details only the owner would know..."></textarea></label><button class="button button-primary" type="submit">Send claim <span>→</span></button></form></div></div>
+    <div class="modal-backdrop hidden" id="authBackdrop"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="authTitle"><button aria-label="Close sign-in dialog" class="modal-close" id="authClose">×</button><div class="modal-icon">♙</div><h2 id="authTitle">Welcome back</h2><p id="authDescription">Sign in to report items and manage your claims.</p><form id="authForm"><label>Name <input name="name" placeholder="Your name" /></label><label>Email <input required name="email" type="email" placeholder="you@college.edu" /></label><label>Password <input required name="password" type="password" placeholder="At least 8 characters" /></label><button class="button button-primary" type="submit" id="authSubmit">Sign in <span>→</span></button></form><button class="auth-switch" id="authSwitch" type="button">Need an account? Create one</button></div></div>
+    <div role="status" aria-live="polite" class="toast hidden" id="toast"><span class="toast-check">✓</span><span id="toastMessage">Done</span></div>
+    <script src="app.js"></script>
+  </body>
+</html>

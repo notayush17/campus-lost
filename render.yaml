@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: campuslost-demo
+    runtime: node
+    plan: free
+    buildCommand: npm install --package-lock=false
+    startCommand: npm start
+    healthCheckPath: /api/items
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: DEMO_MODE
+        value: "true"
