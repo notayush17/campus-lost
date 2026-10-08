@@ -35,3 +35,12 @@ button:disabled { opacity:.6; cursor:wait; }
 
 .demo-banner { padding:14px 6.5%; background:#fff0df; color:#624833; font-size:13px; line-height:1.6; }
 .demo-banner a { color:inherit; font-weight:700; }
+
+.pulse-dot { animation: campus-pulse 2.4s ease-in-out infinite; }
+@keyframes campus-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px #f7ded2; transform: scale(1); }
+  50% { box-shadow: 0 0 0 9px #f7ded200; transform: scale(1.15); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot { animation: none; }
+}
