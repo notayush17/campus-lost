@@ -44,3 +44,21 @@ button:disabled { opacity:.6; cursor:wait; }
 @media (prefers-reduced-motion: reduce) {
   .pulse-dot { animation: none; }
 }
+
+.item-card {
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.item-photo { transition: transform .3s ease; }
+@media (hover: hover) {
+  .item-card:hover {
+    transform: translateY(-6px);
+    border-color: #e8d9ce;
+    box-shadow: 0 16px 36px rgba(45, 34, 31, .13);
+  }
+  .item-card:hover .item-photo { transform: scale(1.035); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .item-card, .item-photo { transition: none; }
+  .item-card:hover { transform: none; }
+  .item-card:hover .item-photo { transform: none; }
+}
