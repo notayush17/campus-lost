@@ -11,7 +11,7 @@ const DEMO_MODE = process.env.DEMO_MODE === "true";
 const sessions = new Map();
 const loginAttempts = new Map();
 const categories = ["Electronics", "Accessories", "Study", "Clothing", "Keys"];
-const locations = ["Library", "Student Centre", "North Block", "Sports Complex", "Cafeteria"];
+const locations = ["Library", "Garden Boys Hostel", "Girls Hostel", "Placement Cell", "Sports Complex", "Cafeteria"];
 let database;
 function fail(status, message) { const error = new Error(message); error.status = status; throw error; }
 function field(input, key, min = 1, max = 500) { const value = input[key]; if (typeof value !== "string" || value.trim().length < min || value.trim().length > max) fail(400, `Please enter a valid ${key} (${min}–${max} characters).`); return value.trim(); }
@@ -19,13 +19,13 @@ function admin(req, res, data) { const user = currentUser(req, data); if (!user)
 
 const seedItems = [
   ["Blue water bottle", "found", "Accessories", "Library", "A matte blue bottle with a small white sticker near the cap.", "♒", "visual-blue", "Riya S."],
-  ["Black wireless earbuds", "lost", "Electronics", "Student Centre", "Black earbuds in a small charging case. Left earbud has a tiny mark.", "◉", "visual-peach", "Ayush K."],
-  ["Calculus notebook", "found", "Study", "North Block", "Purple spiral notebook with handwritten notes and a yellow tab.", "▤", "visual-lilac", "Dev M."],
+  ["Black wireless earbuds", "lost", "Electronics", "Garden Boys Hostel", "Black earbuds in a small charging case. Left earbud has a tiny mark.", "◉", "visual-peach", "Ayush K."],
+  ["Calculus notebook", "found", "Study", "Placement Cell", "Purple spiral notebook with handwritten notes and a yellow tab.", "▤", "visual-lilac", "Dev M."],
   ["Silver keychain", "lost", "Keys", "Cafeteria", "Silver keychain with three keys and a tiny green charm.", "⚿", "visual-yellow", "Meera P."],
   ["Grey hoodie", "found", "Clothing", "Sports Complex", "Oversized grey hoodie, size M, found on the second-floor bench.", "♧", "visual-blue", "Kabir R."],
   ["USB-C adapter", "lost", "Electronics", "Library", "Small white USB-C to HDMI adapter with a grey pouch.", "▣", "visual-peach", "Nisha T."],
-  ["Brown leather wallet", "found", "Accessories", "North Block", "Brown wallet with no cash inside. Initials may be embossed on the back.", "▰", "visual-yellow", "Sahil J."],
-  ["Green geometry box", "lost", "Study", "Student Centre", "Green geometry box with a name label inside the lid.", "△", "visual-lilac", "Ishita B."]
+  ["Brown leather wallet", "found", "Accessories", "Placement Cell", "Brown wallet with no cash inside. Initials may be embossed on the back.", "▰", "visual-yellow", "Sahil J."],
+  ["Green geometry box", "lost", "Study", "Girls Hostel", "Green geometry box with a name label inside the lid.", "△", "visual-lilac", "Ishita B."]
 ];
 
 function hashPassword(password, salt = crypto.randomBytes(16).toString("hex")) {
@@ -53,7 +53,13 @@ function initialData() {
 
 function readData() {
   if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, JSON.stringify(initialData(), null, 2));
-  if (!database) database = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
+  if (!database) {
+    database = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
+    for (const item of database.items) {
+      if (item.location === "North Block") item.location = "Placement Cell";
+      if (item.location === "Student Centre") item.location = item.id === 8 && !item.reporterId ? "Girls Hostel" : "Garden Boys Hostel";
+    }
+  }
   return database;
 }
 
