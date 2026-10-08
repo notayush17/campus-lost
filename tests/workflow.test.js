@@ -18,7 +18,7 @@ test('student/admin workflow, authorization, persistence and private assets', as
     for (const asset of ['/data.json','/server.js','/.env.example','/package.json']) assert.equal((await request(asset)).status,404);
     assert.equal((await request('/api/admin/overview')).status,401);
     assert.equal((await request('/api/auth/register','POST',{name:' ',email:'bad',password:'short'})).status,400);
-    const student = await request('/api/auth/login','POST',{email:'aarav@campuslost.local',password:'Password123!'});
+    const student = await request('/api/auth/login','POST',{email:'ayush@campuslost.local',password:'Password123!'});
     assert.equal(student.status,200);
     assert.equal((await request('/api/admin/overview','GET',undefined,student.cookie)).status,403);
     const photo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=';

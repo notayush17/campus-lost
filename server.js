@@ -42,7 +42,7 @@ function validPassword(password, stored) {
 function initialData() {
   return {
     users: [
-      { id: 1, name: "Ayush Kumar", email: "aarav@campuslost.local", passwordHash: hashPassword("Password123!"), role: "student" },
+      { id: 1, name: "Ayush Kumar", email: "ayush@campuslost.local", passwordHash: hashPassword("Password123!"), role: "student" },
       { id: 2, name: "Campus Admin", email: "admin@campuslost.local", passwordHash: hashPassword("Admin123!"), role: "admin" }
     ],
     items: seedItems.map((item, index) => ({ id: index + 1, title: item[0], type: item[1], category: item[2], location: item[3], description: item[4], icon: item[5], visual: item[6], reporter: item[7], status: "approved", createdAt: new Date().toISOString() })),

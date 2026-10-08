@@ -42,7 +42,7 @@ Then open http://127.0.0.1:3001. Open through the server, rather than double-cli
 
 | Role | Email | Password |
 | --- | --- | --- |
-| Student (Ayush Kumar) | aarav@campuslost.local | Password123! |
+| Student (Ayush Kumar) | ayush@campuslost.local | Password123! |
 | Admin | admin@campuslost.local | Admin123! |
 
 New registrations always receive the student role, even if the email contains "admin". Email delivery and college verification are not connected.
